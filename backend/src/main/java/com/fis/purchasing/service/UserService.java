@@ -150,16 +150,16 @@ public class UserService {
     private void validateUniqueFields(String username, String email, UUID userId) {
         if (StringUtils.hasText(username)) {
             boolean usernameExists = userId == null
-                    ? userRepository.existsByUsernameIgnoreCase(username.trim())
-                    : userRepository.existsByUsernameIgnoreCaseAndIdNot(username.trim(), userId);
+                    ? userRepository.existsByUsername(username.trim())
+                    : userRepository.existsByUsernameAndIdNot(username.trim(), userId);
             if (usernameExists) {
                 throw new ConflictException("Username already exists");
             }
         }
         if (StringUtils.hasText(email)) {
             boolean emailExists = userId == null
-                    ? userRepository.existsByEmailIgnoreCase(email.trim())
-                    : userRepository.existsByEmailIgnoreCaseAndIdNot(email.trim(), userId);
+                    ? userRepository.existsByEmail(email.trim())
+                    : userRepository.existsByEmailAndIdNot(email.trim(), userId);
             if (emailExists) {
                 throw new ConflictException("Email already exists");
             }

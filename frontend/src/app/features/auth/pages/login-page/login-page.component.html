@@ -1,0 +1,37 @@
+<section class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5">
+      <article class="card border-0 shadow-lg rounded-4">
+        <div class="card-body p-4 p-md-5">
+          <p class="text-uppercase fw-semibold text-secondary mb-2 tracking-label">Purchasing Request Portal</p>
+          <h1 class="h3 fw-bold mb-4">Dang nhap he thong</h1>
+
+          @if (errorMessage()) {
+            <div class="alert alert-danger" role="alert">
+              {{ errorMessage() }}
+            </div>
+          }
+
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="d-grid gap-3">
+            <div>
+              <label class="form-label fw-semibold">Username</label>
+              <input class="form-control form-control-lg" type="text" formControlName="username" />
+            </div>
+
+            <div>
+              <label class="form-label fw-semibold">Password</label>
+              <input class="form-control form-control-lg" type="password" formControlName="password" />
+            </div>
+
+            <button class="btn btn-primary btn-lg mt-2" type="submit" [disabled]="isSubmitting()">
+              @if (isSubmitting()) {
+                <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+              }
+              Dang nhap
+            </button>
+          </form>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

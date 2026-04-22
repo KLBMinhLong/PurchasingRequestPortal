@@ -153,6 +153,46 @@ Cac bien da duoc cau hinh san trong compose voi gia tri fallback. Ban co the ove
 - Redis: localhost:6379
 - Kafka (host client): localhost:29092
 
+## 7. Keycloak bootstrap (realm/client)
+
+Keycloak da duoc cau hinh de import realm khi container khoi dong. File import nam tai:
+
+- infrastructure/keycloak/import/purchasing-portal-realm.json
+
+Realm import san:
+
+- realm: `purchasing-portal`
+- realm roles: `ADMIN`, `USER`, `APPROVER`, `REQUESTOR`
+- client confidential: `prp-backend`
+- direct access grants: bat
+- service accounts: bat
+- mapper roles -> token claim `roles`
+- mapper username -> token claim `preferred_username`
+
+Buoc khoi tao:
+
+1. Cap nhat root `.env` hoac `infrastructure/env/.env` voi `KEYCLOAK_CLIENT_SECRET=prp-backend-dev-secret`.
+2. Chay lai Keycloak:
+
+```bash
+docker compose -f infrastructure/docker-compose.yml up -d --force-recreate keycloak
+```
+
+3. Dang nhap Admin Console bang `KEYCLOAK_ADMIN` / `KEYCLOAK_ADMIN_PASSWORD`.
+4. Mo realm `purchasing-portal` va kiem tra client `prp-backend`.
+5. Gan service-account cua client `prp-backend` cac role trong `realm-management`:
+    - `manage-users`
+    - `query-users`
+    - `view-users`
+    - `view-realm`
+    - `manage-realm` neu backend can quan ly cau hinh realm
+
+Luu y:
+
+- Frontend khong ket noi truc tiep den Keycloak.
+- Moi xac thuc va logout deu thong qua Backend.
+- Neu can reset lai toan bo realm, xoa volume PostgreSQL va khoi dong lai stack.
+
 ## 7. Luu y van hanh dev
 
 - Script infrastructure/postgres/init/01-init-databases.sql chi chay o lan dau tao volume postgres_data.

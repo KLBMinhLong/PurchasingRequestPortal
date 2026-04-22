@@ -1,6 +1,6 @@
 # Backend
 
-Java Spring Boot backend (Spring Boot 3.x, Java 24).
+Java Spring Boot backend (Spring Boot 3.x, Java 21 LTS).
 
 ## Environment
 

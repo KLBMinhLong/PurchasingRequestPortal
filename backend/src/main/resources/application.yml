@@ -93,3 +93,4 @@ logging:
     org.camunda.bpm: INFO
     org.mybatis: INFO
     org.hibernate.SQL: INFO
+    org.springframework.web: DEBUG

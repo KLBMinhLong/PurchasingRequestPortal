@@ -9,17 +9,17 @@ import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
-    Optional<UserEntity> findByUsernameIgnoreCase(String username);
+    Optional<UserEntity> findByUsername(String username);
 
-    Optional<UserEntity> findByEmailIgnoreCase(String email);
+    Optional<UserEntity> findByEmail(String email);
 
-    boolean existsByUsernameIgnoreCase(String username);
+    boolean existsByUsername(String username);
 
-    boolean existsByEmailIgnoreCase(String email);
+    boolean existsByEmail(String email);
 
-    boolean existsByUsernameIgnoreCaseAndIdNot(String username, UUID id);
+    boolean existsByUsernameAndIdNot(String username, UUID id);
 
-    boolean existsByEmailIgnoreCaseAndIdNot(String email, UUID id);
+    boolean existsByEmailAndIdNot(String email, UUID id);
 
     @EntityGraph(attributePaths = "roles")
     Optional<UserEntity> findWithRolesById(UUID id);
