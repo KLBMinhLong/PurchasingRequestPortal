@@ -1,0 +1,16 @@
+services:
+  postgres:
+    restart: always
+
+  keycloak:
+    command: start
+    restart: always
+
+  kafka:
+    restart: always
+
+  redis:
+    restart: always
+
+  camunda:
+    restart: always

@@ -7,10 +7,24 @@
 
 ## 1) Kien truc bat buoc
 
+### 1.1 Layered / Clean Architecture
+
 - Bắt buộc áp dụng Layered Architecture hoặc Clean Architecture.
 - Bắt buộc đi đúng luồng: Controller -> Service/UseCase -> Repository.
 - Không cho phép Controller gọi trực tiếp Repository.
 - Không cho phép code nghiệp vụ nằm trong Controller.
+
+### 1.2 Backend la gateway cho tat ca dich vu ben thu ba
+
+**QUAN TRONG: Backend la DIEM DUNG DIEN DUNG de tương tác voi tat ca dich vu ben thu ba:**
+- Frontend chi noi chuyen voi Backend.
+- Backend phu cap dang nhap, xac thuc, cap phat token (thong qua Keycloak + Custom User Storage SPI).
+- Backend ket noi voi PostgreSQL, Redis, Kafka, Camunda.
+- Frontend KHONG bao gio truy cap truc tiep Keycloak, PostgreSQL, hoac bat ky dich vu khac.
+- Tat ca API endpoint cua Backend phai co authentication/authorization check; khong cho phep Frontend bypass.
+
+### 1.3 Package structure bat buoc
+
 - Bắt buộc tách package theo vai trò kỹ thuật và nghiệp vụ.
 - Bắt buộc chuẩn package gốc: com.fis.purchasing.
 - Bắt buộc tổ chức package tối thiểu như sau:

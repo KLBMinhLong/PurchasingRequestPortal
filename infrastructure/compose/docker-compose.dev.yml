@@ -1,0 +1,25 @@
+services:
+  postgres:
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_dev_password}
+      POSTGRES_DB: ${POSTGRES_DB:-portal}
+
+  keycloak:
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin_dev_password}
+
+  kafka:
+    environment:
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+
+  redis:
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis_dev_password}
+
+  camunda:
+    environment:
+      CAMUNDA_DB_NAME: ${CAMUNDA_DB_NAME:-camunda}
+      CAMUNDA_DB_USER: ${CAMUNDA_DB_USER:-camunda}
+      CAMUNDA_DB_PASSWORD: ${CAMUNDA_DB_PASSWORD:-camunda_dev_password}

@@ -38,9 +38,25 @@
 
 ## 4) Bao mat bat buoc
 
+### 4.1 Quy tac ket noi Backend
+
+**QUAN TRONG: Frontend CHI tương tác với Backend, KHONG bao gio ket noi truc tiep den Keycloak.**
+
+- Frontend chi goi API Backend (http://localhost:8082/api/...)
+- Tuyet doi khong goi truc tiep den Keycloak (http://localhost:8080/...).
+- Tuyet doi khong tao Keycloak client trong frontend.
+- Tuyet doi khong dung keycloak-js library hoac OAuth2 client truc tiep.
+- Toan bo logic dang nhap, xac thuc, refresh token deu do Backend phu cap.
+
+### 4.2 HTTP Interceptor va Token
+
 - Bắt buộc dùng HTTP Interceptor để tự động đính kèm JWT Token vào mọi request cần xác thực.
 - Không gắn token thủ công tại từng service hoặc từng request.
 - Bắt buộc xử lý response 401/403 tập trung trong interceptor (hoặc auth workflow chuẩn).
+- Token JWT nhan tu Backend (khong lay tu Keycloak truc tiep).
+
+### 4.3 Route Guards va Phan quyen
+
 - Bắt buộc dùng Route Guards để kiểm tra quyền truy cập trước khi vào route.
 - Bắt buộc kiểm tra role/permission cho các route nhạy cảm (User/Admin).
 - Bắt buộc điều hướng về trang phù hợp khi không đủ quyền (forbidden hoặc login).
