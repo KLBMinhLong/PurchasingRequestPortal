@@ -1,0 +1,64 @@
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Node.js / Angular
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+.pnpm-store/
+.angular/
+dist/
+coverage/
+
+# =========================
+# Java / Spring Boot / Maven / Gradle
+# =========================
+target/
+out/
+*.class
+*.jar
+*.war
+*.ear
+.mvn/wrapper/maven-wrapper.jar
+.gradle/
+build/
+
+# =========================
+# IDE / Editor
+# =========================
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+
+# =========================
+# Logs / Temp / Cache
+# =========================
+logs/
+*.log
+tmp/
+*.tmp
+*.swp
+
+# =========================
+# Environment files
+# =========================
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# =========================
+# Docker local overrides
+# =========================
+**/docker-compose.override.yml
