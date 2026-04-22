@@ -32,11 +32,21 @@ services:
       KC_DB_URL: jdbc:postgresql://postgres:5432/${KEYCLOAK_DB_NAME:-keycloak}
       KC_DB_USERNAME: ${KEYCLOAK_DB_USER:-keycloak}
       KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD:-keycloak_dev_password}
+      SPI_DB_JDBC_URL: ${SPI_DB_JDBC_URL:-jdbc:postgresql://postgres:5432/portal}
+      SPI_DB_USERNAME: ${SPI_DB_USERNAME:-keycloak_spi}
+      SPI_DB_PASSWORD: ${SPI_DB_PASSWORD:-keycloak_spi_dev_password}
+      SPI_DB_DRIVER: ${SPI_DB_DRIVER:-org.postgresql.Driver}
+      SPI_DB_SCHEMA: ${SPI_DB_SCHEMA:-identity}
+      SPI_HIKARI_MAX_POOL_SIZE: ${SPI_HIKARI_MAX_POOL_SIZE:-5}
+      SPI_HIKARI_MIN_IDLE: ${SPI_HIKARI_MIN_IDLE:-1}
+      SPI_HIKARI_CONNECTION_TIMEOUT_MS: ${SPI_HIKARI_CONNECTION_TIMEOUT_MS:-30000}
       KC_HEALTH_ENABLED: "true"
       KC_METRICS_ENABLED: "true"
       KC_HTTP_ENABLED: "true"
     ports:
       - "8080:8080"
+    volumes:
+      - ./keycloak/providers:/opt/keycloak/providers:ro
     depends_on:
       postgres:
         condition: service_healthy
@@ -44,20 +54,22 @@ services:
       - prp_net
 
   kafka:
-    image: bitnami/kafka:3.8
+    image: apache/kafka:3.9.1
     container_name: prp-kafka
     restart: unless-stopped
     environment:
-      KAFKA_ENABLE_KRAFT: "yes"
-      KAFKA_CFG_NODE_ID: "1"
-      KAFKA_CFG_PROCESS_ROLES: broker,controller
-      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,PLAINTEXT_HOST://:29092,CONTROLLER://:9093
-      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
-      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
-      KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: "true"
-      ALLOW_PLAINTEXT_LISTENER: "yes"
+      KAFKA_NODE_ID: "1"
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENERS: PLAINTEXT://:9092,PLAINTEXT_HOST://:29092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "1"
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: "0"
     ports:
       - "9092:9092"
       - "29092:29092"

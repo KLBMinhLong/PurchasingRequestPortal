@@ -1,0 +1,16 @@
+services:
+  postgres:
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-portal_test}
+
+  kafka:
+    environment:
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+
+  redis:
+    command:
+      - redis-server
+      - --appendonly
+      - "no"
+      - --requirepass
+      - ${REDIS_PASSWORD:-redis_test_password}

@@ -8,6 +8,36 @@ Tai lieu nay huong dan khoi dong toan bo ha tang local cho Purchasing Request Po
 - Redis
 - Camunda BPMN
 
+## 0. Architecture - Frontend & Backend Communication
+
+**CRITICAL: Frontend chi noi chuyen voi Backend. Tat ca dich vu ben thu ba (Keycloak, PostgreSQL, Kafka, Redis, Camunda) chi tương tac voi Backend.**
+
+```
+┌─────────────┐                    ┌─────────────────────────────────────────┐
+│   Frontend  │                    │           Backend                       │
+│  (Angular)  │  HTTP REST API     │      (Spring Boot)                      │
+│             │◄──────────────────►│                                         │
+│             │   JWT Token        │                                         │
+│ :4200       │                    │ :8082  ┌──────────────────────────────┐ │
+└─────────────┘                    │        │ Services (Docker Network)   │ │
+                                   │        │ ├─ PostgreSQL :5432         │ │
+                                   │        │ ├─ Keycloak :8080           │ │
+                                   │        │ ├─ Kafka :9092/:29092       │ │
+                                   │        │ ├─ Redis :6379              │ │
+                                   │        │ └─ Camunda :8081            │ │
+                                   │        └──────────────────────────────┘ │
+                                   └─────────────────────────────────────────┘
+
+Frontend KHONG ket noi truc tiep den:
+- Keycloak (khong dung keycloak-js)
+- PostgreSQL (khong truy cap database)
+- Kafka (khong la message producer)
+- Redis (khong la cache client)
+- Camunda (khong call workflow API)
+
+Tat ca dieu kien tren phai thong qua Backend REST API.
+```
+
 ## 1. Yeu cau tien quyet
 
 - Docker Desktop hoac Docker Engine + Docker Compose v2
