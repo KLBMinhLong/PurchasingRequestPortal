@@ -1,8 +1,11 @@
 package com.fis.purchasing.controller;
 
+import com.fis.purchasing.dto.request.LoginRequest;
 import com.fis.purchasing.dto.request.LogoutRequest;
 import com.fis.purchasing.dto.response.ApiResponse;
+import com.fis.purchasing.dto.response.LoginResponse;
 import com.fis.purchasing.dto.response.LogoutResponse;
+import com.fis.purchasing.service.LoginService;
 import com.fis.purchasing.service.LogoutService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -14,12 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-public class LogoutController {
+public class AuthController {
 
+    private final LoginService loginService;
     private final LogoutService logoutService;
 
-    public LogoutController(LogoutService logoutService) {
+    public AuthController(LoginService loginService, LogoutService logoutService) {
+        this.loginService = loginService;
         this.logoutService = logoutService;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<LoginResponse>> login(@Valid @RequestBody LoginRequest request) {
+        LoginResponse response = loginService.login(request);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ApiResponse.success("SUCCESS", "Login successful", response, "/api/auth/login"));
     }
 
     @PostMapping("/logout")

@@ -81,11 +81,13 @@ camunda:
 app:
   security:
     expected-audience: ${KEYCLOAK_CLIENT_ID:prp-backend}
+    cors-allowed-origins:
+      - ${FRONTEND_URL:http://localhost:4200}
   keycloak:
     base-url: ${KEYCLOAK_BASE_URL:http://localhost:8080}
     realm: ${KEYCLOAK_REALM:purchasing-portal}
     client-id: ${KEYCLOAK_CLIENT_ID:prp-backend}
-    client-secret: ${KEYCLOAK_CLIENT_SECRET:change-me}
+    client-secret: ${KEYCLOAK_CLIENT_SECRET:prp-backend-dev-secret}
 
 logging:
   level:

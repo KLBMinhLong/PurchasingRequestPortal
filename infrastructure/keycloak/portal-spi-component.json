@@ -1,0 +1,18 @@
+{
+  "id": "f4f216c8-ac2f-431f-9606-a6473f1376e6",
+  "name": "Portal Identity SPI",
+  "providerId": "portal-identity-spi",
+  "providerType": "org.keycloak.storage.UserStorageProvider",
+  "parentId": "purchasing-portal",
+  "config": {
+    "jdbcUrl": ["jdbc:postgresql://postgres:5432/portal"],
+    "dbUser": ["keycloak_spi"],
+    "dbPassword": ["keycloak_spi_dev_password"],
+    "schema": ["identity"],
+    "driverClassName": ["org.postgresql.Driver"],
+    "maximumPoolSize": ["5"],
+    "minimumIdle": ["1"],
+    "connectionTimeoutMs": ["30000"],
+    "enabled": ["true"]
+  }
+}
